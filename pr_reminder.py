@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 from dateutil.parser import parse
 from datetime import datetime, timedelta
+from slack_sdk import WebClient
 
 # Carga las variables del archivo .env
 load_dotenv()
@@ -29,10 +30,17 @@ def get_open_pull_requests(user, repo, token):
 # Uso de las funciones:
 org = os.getenv("ORG")
 token = os.getenv("TOKEN")
+slack_token = os.getenv("SLACK_TOKEN")
+slack_channel = "#eng-pending-pr"
+
+client = WebClient(token=slack_token)
+
 repos = get_repos(org, token)
 for repo in repos:
     print(f'Repositorio: {repo["name"]}')
     pull_requests = get_open_pull_requests(org, repo["name"], token)
     for pr in pull_requests:
         print(f'  PR: {pr["title"]} - URL: {pr["html_url"]}')
+        # Envia un mensaje al canal de Slack
+        client.chat_postMessage(channel=slack_channel, text=f'El PR "{pr["title"]}" ha estado abierto durante más de 24 horas: {pr["html_url"]}. @{pr["user"]["login"]}, por favor revisa esto.')
 
