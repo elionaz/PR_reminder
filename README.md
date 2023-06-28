@@ -2,10 +2,6 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/clara-team">
-    <img src="https://www.clara.com/hubfs/Logo_Clara_%20(1)-2.svg" alt="Logo" width="200" height="80">
-  </a>
-
   <h3 align="center">Open PR Slack Reminder</h3>
 
   <p align="center">
